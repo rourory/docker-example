@@ -11,7 +11,7 @@ services:
       - /app/node_modules
       # assing local directory to directory in the container
       - ./frontend:/app
-      # therefore we can change file in local directory and the will be syncronized with files in the container 
+      # therefore we can change file in local directory and the will be syncronized with files in the container
   api:
     build: ./api
     ports:
@@ -24,11 +24,14 @@ services:
     volumes:
       - /app/node_modules
       - ./api:/app
-  mysql:
-    image: mysql
     environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: '3306'
+      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: time_db
+  mysql:
+    image: mysql
     restart: always
     volumes:
       - mysql_data:/var/lib/mysql
