@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    restart: always
+    volumes:
+      # excluding this directory in the container
+      - /app/node_modules
+      # assing local directory to directory in the container
+      - ./frontend:/app
+      # therefore we can change file in local directory and the will be syncronized with files in the container 
+  api:
+    build: ./api
+    ports:
+      - '5555:5000'
+    restart: always
+    # this service will be built after mysql service
+    depends_on:
+      - mysql
+    # the same meaning as in frontend service
+    volumes:
+      - /app/node_modules
+      - ./api:/app
+  mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: time_db
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+  adminer:
+    image: adminer
+    ports:
+      - '8888:8080'
+    restart: always
+
+volumes:
+  mysql_data:
