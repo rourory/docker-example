@@ -1,5 +1,5 @@
 # What is it
-It's an docker example project. Here you can see all the basic features of docker usage. 
+It's an example docker project. Here you can see all the basic features of docker usage. 
 
 # Architecture
 ![Arch](arch.png)
